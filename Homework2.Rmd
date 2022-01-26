@@ -1,0 +1,83 @@
+---
+title: "DellacquaFrannie_BIOL453IntermediateHW"
+author: "Francesca Dellacqua"
+date: "1/18/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. The values stored in the object output are averages of the sepal and petal length and widths of each of the three species of iris (in centimeters). The loops created a sequence of the species and carried out calculations of averages for each of the three. 
+
+2. Species ID duplicates are removed with 'unique' function. Matrix is organized with species ID as rows and iris as columns with labels above each data point (as defined further in written code). Row and column names are defined as sp_ids and iris. i variable is defined as 3L organizing the 3 species identifications into a sequence. Iris_sp loop from subset including species identification and i showing 3 values for each identifier (one for each species). If row with iris_sp variables are greater than 0, define x and y as names of species and sample size, go through list and average variables as to create matrix with each species demonstrating an average of chosen subsets.
+
+3. The output is just averaging values for each species subset of data - therefore output can be average_by_species and x and y can be defined as the names and n representing sample size. 
+
+4.
+```{r}
+sp_ids <- unique(iris$Species)
+
+average_by_species <- matrix(0, nrow=length(sp_ids),ncol=ncol(iris)-1)
+rownames(average_by_species) <- sp_ids
+colnames(average_by_species) <- names(iris[ , -ncol(iris)])
+cumulative <- NULL
+
+for(names in seq_along(sp_ids)) {
+  iris_sp <- subset(iris, subset=Species == sp_ids[names], select=-Species)
+  for(n in names(iris_sp)) {
+    if(class(iris_sp[,n]) == 'integer' | class(iris_sp[,n]) == 'numeric') {
+      cumulative <- mean(iris_sp[,n])
+    }
+    average_by_species[names, n] <- cumulative
+  }
+}
+average_by_species
+```
+
+5. 
+```{r}
+x <- 1:10
+y <- NULL
+for (i in x) {
+  y <- x * (x+1) / 2
+}
+y
+```
+
+6. 
+```{r}
+x <- 1:10
+y <- NULL
+for(i in x) {
+  sum <- x * (x+1) / 2
+  if(sum[i] <= 10) {
+    y <- sum
+  }
+  else{
+    y[i] <- NA
+  }
+}  
+y
+```
+
+7. 
+```{r}
+sum_of_sequence <- function(x) {
+  y <- NULL
+  x <- 1:x
+  for(i in x) {
+    sum <- x * (x+1) /2
+    if(sum[i] <= 10){
+      y <- sum
+    }
+    else{
+      y[i] <- NA
+    }
+  }
+  return(y)
+}
+
+sum_of_sequence(18)
+```
